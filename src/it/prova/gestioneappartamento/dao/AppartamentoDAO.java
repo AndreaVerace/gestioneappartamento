@@ -88,4 +88,24 @@ public class AppartamentoDAO {
 		return result;
 	}
 	
+	
+	public int delete(Appartamento appartamento) {
+		if(appartamento == null) {
+			throw new RuntimeException("Impossibile eliminare Appartamento nullo");
+		}
+		
+		int result = 0;
+		try (Connection c = MyConnection.getConnection();
+				PreparedStatement ps = c.prepareStatement("delete from appartamento where id = ?")){
+			
+			ps.setLong(1,appartamento.getId());
+			
+			result = ps.executeUpdate();
+		}  catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
+	
 }

@@ -3,6 +3,7 @@ package it.prova.gestioneappartamento.test;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import it.prova.gestioneappartamento.dao.AppartamentoDAO;
 import it.prova.gestioneappartamento.model.Appartamento;
@@ -17,7 +18,9 @@ public class TestAppartamento {
 		
 		// testInsert(appartamentoDAOInstance);
 		
-		testUpdate(appartamentoDAOInstance);
+		// testUpdate(appartamentoDAOInstance);
+		
+		testDelete(appartamentoDAOInstance);
 	}
 
 	
@@ -61,6 +64,18 @@ public class TestAppartamento {
 		
 		if(quantiAppartamentiModificati != 1) {
 			 throw new RuntimeException("testUpdateAppartamento : FAILED");
+		}
+	}
+	
+	private static void testDelete(AppartamentoDAO appartamentoDAOInstance) {
+		List<Appartamento> lista = appartamentoDAOInstance.list();
+		
+		Appartamento daEliminare = lista.get(3);
+		
+		int quantiEliminati = appartamentoDAOInstance.delete(daEliminare);
+		
+		if(quantiEliminati < 1) {
+			 throw new RuntimeException("testDeleteAppartamento : FAILED");
 		}
 	}
 	
