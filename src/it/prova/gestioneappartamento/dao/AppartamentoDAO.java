@@ -118,10 +118,12 @@ public class AppartamentoDAO {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
+					result = new Appartamento();
 					result.setQuartiere(rs.getString("quartiere"));
 					result.setMetriQuadrati(rs.getInt("metriquadrati"));
 					result.setPrezzo(rs.getInt("prezzo"));
 					result.setDataCostruzione(rs.getDate("datacostruzione"));
+					result.setId(rs.getLong("id"));
 				} else {
 					result = null;
 				}
