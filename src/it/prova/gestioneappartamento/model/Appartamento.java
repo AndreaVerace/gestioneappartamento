@@ -8,17 +8,17 @@ public class Appartamento {
 	private String quartiere;
 	private int metriQuadrati;
 	private int prezzo;
-	private Date dataCreazione;
+	private Date dataCostruzione;
 	
 	public Appartamento() {
 		
 	}
 	
-	public Appartamento(String quartiere,int metriQuadrati,int prezzo,Date dataCreazione) {
+	public Appartamento(String quartiere,int metriQuadrati,int prezzo,Date dataCostruzione) {
 		this.quartiere = quartiere;
 		this.metriQuadrati = metriQuadrati;
 		this.prezzo = prezzo;
-		this.dataCreazione = dataCreazione;
+		this.dataCostruzione = dataCostruzione;
 	}
 
 	public long getId() {
@@ -53,18 +53,18 @@ public class Appartamento {
 		this.prezzo = prezzo;
 	}
 
-	public Date getDataCreazione() {
-		return dataCreazione;
+	public Date getDataCostruzione() {
+		return dataCostruzione;
 	}
 
-	public void setDataCreazione(Date dataCreazione) {
-		this.dataCreazione = dataCreazione;
+	public void setDataCostruzione(Date dataCostruzione) {
+		this.dataCostruzione = dataCostruzione;
 	}
 
 	@Override
 	public String toString() {
 		return "Appartamento [id=" + id + ", quartiere=" + quartiere + ", metriQuadrati=" + metriQuadrati + ", prezzo="
-				+ prezzo + ", dataCreazione=" + dataCreazione + "]";
+				+ prezzo + ", dataCreazione=" + dataCostruzione + "]";
 	}
 	
 	
