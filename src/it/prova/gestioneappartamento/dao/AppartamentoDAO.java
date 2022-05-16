@@ -1,9 +1,14 @@
 package it.prova.gestioneappartamento.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,6 +136,64 @@ public class AppartamentoDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		}
+		return result;
+	}
+	
+	
+	public List<Appartamento> findByExample(Appartamento example) {
+		List<Appartamento> result = new ArrayList<>();
+
+		if (example.getQuartiere() == null || example.getQuartiere() == "") {
+			throw new RuntimeException("Impossibile trovare Appartamento nullo");
+		}
+
+		try (Connection c = MyConnection.getConnection();
+				PreparedStatement ps = c.prepareStatement(
+						"select * from appartamento where  quartiere like ? and metriquadrati > ? and prezzo > ? and datacostruzione < ? ")) {
+
+			//ps.setLong(1, example.getId());
+
+			for(int i = 0;i < list().size();i++) {
+				String quartiereCompleto = list().get(i).getQuartiere();
+					if(quartiereCompleto.contains(example.getQuartiere())) {
+					ps.setString(1, quartiereCompleto);
+					}
+			}
+			
+			ps.setInt(2, example.getMetriQuadrati());
+
+			ps.setInt(3, example.getPrezzo());
+
+			try {
+				if (example.getDataCostruzione().before(new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2022"))) {
+					ps.setDate(4, new java.sql.Date(example.getDataCostruzione().getTime()));
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					Appartamento ap = new Appartamento();
+					//ap.setId(rs.getLong("id"));
+					ap.setQuartiere(rs.getString("quartiere"));
+					ap.setMetriQuadrati(rs.getInt("metriquadrati"));
+					ap.setPrezzo(rs.getInt("prezzo"));
+					ap.setDataCostruzione(rs.getDate("datacostruzione"));
+
+					result.add(ap);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		return result;
 	}

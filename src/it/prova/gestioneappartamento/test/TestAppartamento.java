@@ -22,7 +22,9 @@ public class TestAppartamento {
 		
 		// testDelete(appartamentoDAOInstance);
 		
-		testFindById(appartamentoDAOInstance);
+		// testFindById(appartamentoDAOInstance);
+		
+		TestFindByExample(appartamentoDAOInstance);
 	}
 
 	
@@ -89,6 +91,27 @@ public class TestAppartamento {
 		
 		if(result == null || !result.getQuartiere().equals(appartamentoDAOInstance.list().get(0).getQuartiere())){
 			throw new RuntimeException("testFINDBYIDAppartamento : FAILED");
+		}
+	}
+	
+	private static void TestFindByExample(AppartamentoDAO appartamentoDAOInstance) {
+		java.util.Date data1 = null;
+		try {
+			data1 =  new SimpleDateFormat("dd/MM/yyyy").parse("10/05/2022");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Appartamento inEntrata = new Appartamento("ZON",0,0,data1);
+		
+		List<Appartamento> lista = appartamentoDAOInstance.findByExample(inEntrata);
+		
+		if(lista.size() < 1) {
+			throw new RuntimeException("testFINDBYEXAMPLEAppartamento : FAILED");
+		}
+		for(Appartamento list : lista) {
+			System.out.println(lista);
 		}
 	}
 }
