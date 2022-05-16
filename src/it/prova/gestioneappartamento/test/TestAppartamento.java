@@ -20,7 +20,9 @@ public class TestAppartamento {
 		
 		// testUpdate(appartamentoDAOInstance);
 		
-		testDelete(appartamentoDAOInstance);
+		// testDelete(appartamentoDAOInstance);
+		
+		testFindById(appartamentoDAOInstance);
 	}
 
 	
@@ -79,4 +81,14 @@ public class TestAppartamento {
 		}
 	}
 	
+	
+	private static void testFindById(AppartamentoDAO appartamentoDAOInstance) {
+		Appartamento cheRicerco = appartamentoDAOInstance.list().get(0);
+		
+		Appartamento result = appartamentoDAOInstance.findById(cheRicerco.getId());
+		
+		if(result == null || !result.getQuartiere().equals(appartamentoDAOInstance.list().get(0).getQuartiere())){
+			throw new RuntimeException("testFINDBYIDAppartamento : FAILED");
+		}
+	}
 }

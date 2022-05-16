@@ -108,4 +108,28 @@ public class AppartamentoDAO {
 		return result;
 	}
 	
+	
+	public Appartamento findById(Long id) {
+		Appartamento result = null;
+		try (Connection c = MyConnection.getConnection();
+				PreparedStatement ps = c.prepareStatement("select * from appartamento where id = ?")) {
+
+			ps.setLong(1, id);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					result.setQuartiere(rs.getString("quartiere"));
+					result.setMetriQuadrati(rs.getInt("metriquadrati"));
+					result.setPrezzo(rs.getInt("prezzo"));
+					result.setDataCostruzione(rs.getDate("datacostruzione"));
+				} else {
+					result = null;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
 }
