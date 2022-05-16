@@ -161,12 +161,16 @@ public class AppartamentoDAO {
 					}
 			}
 			
-			ps.setInt(2, example.getMetriQuadrati());
-
-			ps.setInt(3, example.getPrezzo());
-
+			if(example.getMetriQuadrati() != 0) {
+				ps.setInt(2, example.getMetriQuadrati());
+			}
+			
+			if(example.getPrezzo() != 0) {
+				ps.setInt(3, example.getPrezzo());
+			}
+			
 			try {
-				if (example.getDataCostruzione().before(new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2022"))) {
+				if (example.getDataCostruzione()!= null && example.getDataCostruzione().before(new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2022"))) {
 					ps.setDate(4, new java.sql.Date(example.getDataCostruzione().getTime()));
 				}
 			} catch (ParseException e) {
