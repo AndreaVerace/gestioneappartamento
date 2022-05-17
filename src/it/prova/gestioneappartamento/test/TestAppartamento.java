@@ -97,15 +97,37 @@ public class TestAppartamento {
 	private static void TestFindByExample(AppartamentoDAO appartamentoDAOInstance) {
 		java.util.Date data1 = null;
 		try {
-			data1 =  new SimpleDateFormat("dd/MM/yyyy").parse("10/05/2022");
+			data1 =  new SimpleDateFormat("dd/MM/yyyy").parse("10/05/1900");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Appartamento inEntrata = new Appartamento("ZON",0,0,data1);
+		Appartamento inEntrata = new Appartamento("ZON",1,1,data1);
 		
 		List<Appartamento> lista = appartamentoDAOInstance.findByExample(inEntrata);
+		
+		if(lista.size() < 1) {
+			throw new RuntimeException("testFINDBYEXAMPLEAppartamento : FAILED");
+		}
+		for(Appartamento list : lista) {
+			System.out.println(lista);
+		}
+	}
+	
+	
+	private static void TestFindByExample2(AppartamentoDAO appartamentoDAOInstance) {
+		java.util.Date data1 = null;
+		try {
+			data1 =  new SimpleDateFormat("dd/MM/yyyy").parse("10/05/1900");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Appartamento inEntrata = new Appartamento("ZON",1,1,data1);
+		
+		List<Appartamento> lista = appartamentoDAOInstance.findByExample2(inEntrata);
 		
 		if(lista.size() < 1) {
 			throw new RuntimeException("testFINDBYEXAMPLEAppartamento : FAILED");
